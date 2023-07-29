@@ -1,34 +1,27 @@
 import React from "react";
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
-  useColorScheme,
 } from "react-native";
+import { Appbar, PaperProvider } from "react-native-paper";
 
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { BookmarksList } from "./components/BookmarksList";
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === "dark";
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? "light-content" : "dark-content"}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}
-      >
-        <BookmarksList />
-      </ScrollView>
-    </SafeAreaView>
+    <PaperProvider>
+      <>
+        <StatusBar />
+        <Appbar.Header>
+          <Appbar.Action icon="menu" onPress={() => console.log("menu")} />
+          <Appbar.Content title="Bookmarks" />
+          <Appbar.Action icon="magnify" onPress={() => {}} />
+        </Appbar.Header>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <BookmarksList />
+        </ScrollView>
+      </>
+    </PaperProvider>
   );
 }
 
