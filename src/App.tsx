@@ -1,27 +1,21 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import {
-  ScrollView,
-  StatusBar,
-} from "react-native";
-import { Appbar, PaperProvider } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
 
-import { BookmarksList } from "./components/BookmarksList";
+import { BookmarksScreen } from "./screens/BookmarksScreen";
+
+const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
   return (
-    <PaperProvider>
-      <>
-        <StatusBar />
-        <Appbar.Header>
-          <Appbar.Action icon="menu" onPress={() => console.log("menu")} />
-          <Appbar.Content title="Bookmarks" />
-          <Appbar.Action icon="magnify" onPress={() => {}} />
-        </Appbar.Header>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <BookmarksList />
-        </ScrollView>
-      </>
-    </PaperProvider>
+    <NavigationContainer>
+      <PaperProvider>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
+        </Stack.Navigator>
+      </PaperProvider>
+    </NavigationContainer>
   );
 }
 
