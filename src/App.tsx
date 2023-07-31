@@ -1,6 +1,4 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, Text, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
 import { PaperProvider } from "react-native-paper";
@@ -8,7 +6,6 @@ import { PaperProvider } from "react-native-paper";
 import { BookmarksScreen } from "./screens/BookmarksScreen";
 import { MainDrawer } from "./components/MainDrawer";
 
-const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function App(): JSX.Element {
