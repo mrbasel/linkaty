@@ -3,9 +3,11 @@ import { View } from "react-native";
 import { Bookmark } from "../types";
 import { BookmarkItem } from "./Bookmark";
 
-const bookmarks: Bookmark[] = [];
+interface BookmarksListProps {
+  bookmarks: Bookmark[];
+}
 
-export function BookmarksList(): JSX.Element {
+export function BookmarksList({ bookmarks }: BookmarksListProps): JSX.Element {
   return (
     <View>
       {bookmarks.map(bookmark => (
