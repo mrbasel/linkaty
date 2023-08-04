@@ -1,9 +1,18 @@
 import { API_URL, TOKEN } from "@env";
 import { useQuery } from "@tanstack/react-query";
-import { Bookmark } from "../types";
+import { Bookmark, BookmarksType } from "../types";
 
-async function fetchBookmarks(): Promise<Bookmark[]> {
-  const response = await fetch(`${API_URL}/api/bookmarks`, {
+async function fetchBookmarks(
+  type: Exclude<BookmarksType, "archived">,
+): Promise<Bookmark[]> {
+  let queryFilter = "";
+  if (type !== "all") {
+    queryFilter = "?q=!" + type;
+  }
+
+  const url = `${API_URL}/api/bookmarks${queryFilter}`;
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Token ${TOKEN}`,
     },
@@ -22,8 +31,7 @@ async function fetchArchivedBookmarks(): Promise<Bookmark[]> {
   return data?.results ?? [];
 }
 
-export function useBookmarks(type: "all" | "archived" = "all") {
-  let queryFn = type === "all" ? fetchBookmarks : fetchArchivedBookmarks;
+export function useBookmarks(type: BookmarksType) {
+  let queryFn = type === "archived" ? fetchArchivedBookmarks : () => fetchBookmarks(type);
   return useQuery({ queryKey: [type], queryFn: queryFn });
 }
-

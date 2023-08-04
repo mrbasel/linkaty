@@ -4,10 +4,11 @@ import { ScrollView, StatusBar } from "react-native";
 import { Appbar, useTheme } from "react-native-paper";
 import { useBookmarks } from "../api/queries";
 import { BookmarksList } from "../components/BookmarksList";
+import { BookmarksType } from "../types";
 
 interface BookmarksScreenProps {
   navigation?: DrawerNavigationHelpers;
-  type?: "all" | "archived";
+  type?: BookmarksType
 }
 
 export function BookmarksScreen({

@@ -13,3 +13,5 @@ export interface Bookmark {
   date_added: string;
   date_modified: string;
 }
+
+export type BookmarksType = "all" | "unread" | "archived" | "untagged";
