@@ -1,8 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
-import { Drawer, useTheme } from "react-native-paper";
-import { DrawerNavigationState, ParamListBase } from "@react-navigation/native";
+import { Divider, Drawer, useTheme } from "react-native-paper";
 
 const bookmarkDrawerItems = ["All", "Archived", "Unread", "Untagged"];
 
@@ -25,21 +24,21 @@ export function MainDrawer({
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
     >
       <View>
-        <Drawer.Section title="Bookmarks">
+        <Drawer.Section title="Bookmarks" showDivider={false}>
           {bookmarkDrawerItems.map((item, index) => (
             <Drawer.Item
               label={item}
               key={index}
               onPress={() => handlePress(item + "Bookmarks")}
-              style={
-                currentScreenIndex === index && {
-                  backgroundColor: theme.colors.primaryContainer,
-                }
-              }
+              active={currentScreenIndex === index}
             />
           ))}
         </Drawer.Section>
-        <Drawer.Item label="Tags" />
+        <View>
+          <Divider />
+          <Drawer.Item label="Tags" />
+          <Divider />
+        </View>
       </View>
       <View>
         <Drawer.Item label="Settings" />

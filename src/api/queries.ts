@@ -26,3 +26,4 @@ export function useBookmarks(type: "all" | "archived" = "all") {
   let queryFn = type === "all" ? fetchBookmarks : fetchArchivedBookmarks;
   return useQuery({ queryKey: [type], queryFn: queryFn });
 }
+
