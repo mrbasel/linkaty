@@ -6,6 +6,7 @@ import { PaperProvider } from "react-native-paper";
 import { BookmarksScreen } from "./screens/BookmarksScreen";
 import { MainDrawer } from "./components/MainDrawer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ArchivedBookmarksScreen } from "./screens/ArchivedBookmarksScreen";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -18,12 +19,18 @@ function App(): JSX.Element {
           <Drawer.Navigator
             screenOptions={{ headerShown: false }}
             initialRouteName="Home"
-            drawerContent={({ navigation }) => (
-              <MainDrawer navigation={navigation} />
+            drawerContent={({ navigation, state }) => (
+              <MainDrawer
+                navigation={navigation}
+                currentScreenIndex={state.index}
+              />
             )}
           >
-            <Drawer.Screen name="Home" component={BookmarksScreen} />
-            <Drawer.Screen name="Notifications" component={BookmarksScreen} />
+            <Drawer.Screen name="AllBookmarks" component={BookmarksScreen} />
+            <Drawer.Screen
+              name="ArchivedBookmarks"
+              component={ArchivedBookmarksScreen}
+            />
           </Drawer.Navigator>
         </QueryClientProvider>
       </NavigationContainer>

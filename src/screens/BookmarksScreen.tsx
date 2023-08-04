@@ -7,13 +7,15 @@ import { BookmarksList } from "../components/BookmarksList";
 
 interface BookmarksScreenProps {
   navigation?: DrawerNavigationHelpers;
+  type?: "all" | "archived";
 }
 
 export function BookmarksScreen({
   navigation,
+  type = "all",
 }: BookmarksScreenProps): JSX.Element {
   const theme = useTheme();
-  const { data: bookmarks } = useBookmarks();
+  const { data: bookmarks } = useBookmarks(type);
 
   return (
     <>
