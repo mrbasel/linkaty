@@ -36,7 +36,11 @@ export function MainDrawer({
         </Drawer.Section>
         <View>
           <Divider />
-          <Drawer.Item label="Tags" />
+          <Drawer.Item
+            label="Tags"
+            onPress={() => handlePress("Tags")}
+            active={currentScreenIndex === 4}
+          />
           <Divider />
         </View>
       </View>

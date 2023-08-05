@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ArchivedBookmarksScreen } from "./screens/ArchivedBookmarksScreen";
 import { UnreadBookmarksScreen } from "./screens/UnreadBookmarksScreen";
 import { UntaggedBookmarksScreen } from "./screens/UntaggedBookmarksScreen";
+import { TagsScreen } from "./screens/TagsScreen";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ function App(): JSX.Element {
               name="UntaggedBookmarks"
               component={UntaggedBookmarksScreen}
             />
+            <Drawer.Screen name="Tags" component={TagsScreen} />
           </Drawer.Navigator>
         </QueryClientProvider>
       </NavigationContainer>
