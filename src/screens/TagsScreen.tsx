@@ -25,20 +25,27 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
         <Appbar.Content title="Tags" />
         <Appbar.Action icon="magnify" onPress={() => {}} />
       </Appbar.Header>
-      <View style={styles.mainContainer}>
+      <View
+        style={{
+          ...styles.mainContainer,
+          backgroundColor: theme.colors.background,
+        }}
+      >
         {isLoading && <Loading />}
         {hasNoTags && <Text>You don't have any tags yet.</Text>}
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          contentContainerStyle={{
-            ...styles.tagsContainer,
-            backgroundColor: theme.colors.background,
-          }}
-        >
-          {tags?.map(tag => (
-            <Chip key={tag.id}>#{tag.name}</Chip>
-          ))}
-        </ScrollView>
+        {hasTags && (
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerStyle={{
+              ...styles.tagsContainer,
+              backgroundColor: theme.colors.background,
+            }}
+          >
+            {tags?.map(tag => (
+              <Chip key={tag.id}>#{tag.name}</Chip>
+            ))}
+          </ScrollView>
+        )}
       </View>
     </>
   );
@@ -47,6 +54,8 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   tagsContainer: {
     flex: 1,
