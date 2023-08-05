@@ -1,6 +1,7 @@
 import { Linking, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Bookmark } from "../types";
+import { TouchableRipple } from "react-native-paper";
 
 interface BookmarkProps {
   bookmark: Bookmark;
@@ -11,9 +12,9 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
 
   return (
     <View>
-      <Text style={styles.link} onPress={handlePress}>
-        {displayBookmarkTitle(bookmark)}
-      </Text>
+      <TouchableRipple onPress={handlePress}>
+        <Text style={styles.link}>{displayBookmarkTitle(bookmark)}</Text>
+      </TouchableRipple>
     </View>
   );
 }
