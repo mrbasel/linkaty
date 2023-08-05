@@ -1,14 +1,15 @@
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
 import React from "react";
-import { ScrollView, StatusBar } from "react-native";
+import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { Appbar, useTheme } from "react-native-paper";
 import { useBookmarks } from "../api/queries";
 import { BookmarksList } from "../components/BookmarksList";
+import { Loading } from "../components/Loading";
 import { BookmarksType } from "../types";
 
 interface BookmarksScreenProps {
   navigation?: DrawerNavigationHelpers;
-  type?: BookmarksType
+  type?: BookmarksType;
 }
 
 export function BookmarksScreen({
@@ -16,7 +17,10 @@ export function BookmarksScreen({
   type = "all",
 }: BookmarksScreenProps): JSX.Element {
   const theme = useTheme();
-  const { data: bookmarks } = useBookmarks(type);
+  const { data: bookmarks, isFetched, isLoading } = useBookmarks(type);
+
+  const hasBookmarks = isFetched && bookmarks && bookmarks.length > 0;
+  const hasNoBookmarks = !hasBookmarks && isFetched;
 
   return (
     <>
@@ -26,12 +30,29 @@ export function BookmarksScreen({
         <Appbar.Content title="Bookmarks" />
         <Appbar.Action icon="magnify" onPress={() => {}} />
       </Appbar.Header>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={{ backgroundColor: theme.colors.background }}
+      <View
+        style={{
+          backgroundColor: theme.colors.background,
+          ...styles.mainContainer,
+        }}
       >
-        <BookmarksList bookmarks={bookmarks ?? []} />
-      </ScrollView>
+        {hasBookmarks && (
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <BookmarksList bookmarks={bookmarks ?? []} />
+          </ScrollView>
+        )}
+
+        {isLoading && <Loading />}
+        {hasNoBookmarks && <Text>No bookmarks here!</Text>}
+      </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
