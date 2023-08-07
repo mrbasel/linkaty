@@ -10,8 +10,9 @@ import { ArchivedBookmarksScreen } from "./screens/ArchivedBookmarksScreen";
 import { UnreadBookmarksScreen } from "./screens/UnreadBookmarksScreen";
 import { UntaggedBookmarksScreen } from "./screens/UntaggedBookmarksScreen";
 import { TagsScreen } from "./screens/TagsScreen";
+import { BookmarksScreensGroup } from "./screens/BookmarkScreensGroup";
 
-const Drawer = createDrawerNavigator();
+export const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
 
 function App(): JSX.Element {
@@ -29,19 +30,21 @@ function App(): JSX.Element {
               />
             )}
           >
-            <Drawer.Screen name="AllBookmarks" component={BookmarksScreen} />
-            <Drawer.Screen
-              name="ArchivedBookmarks"
-              component={ArchivedBookmarksScreen}
-            />
-            <Drawer.Screen
-              name="UnreadBookmarks"
-              component={UnreadBookmarksScreen}
-            />
-            <Drawer.Screen
-              name="UntaggedBookmarks"
-              component={UntaggedBookmarksScreen}
-            />
+            <Drawer.Group>
+              <Drawer.Screen name="AllBookmarks" component={BookmarksScreen} />
+              <Drawer.Screen
+                name="ArchivedBookmarks"
+                component={ArchivedBookmarksScreen}
+              />
+              <Drawer.Screen
+                name="UnreadBookmarks"
+                component={UnreadBookmarksScreen}
+              />
+              <Drawer.Screen
+                name="UntaggedBookmarks"
+                component={UntaggedBookmarksScreen}
+              />
+            </Drawer.Group>
             <Drawer.Screen name="Tags" component={TagsScreen} />
           </Drawer.Navigator>
         </QueryClientProvider>

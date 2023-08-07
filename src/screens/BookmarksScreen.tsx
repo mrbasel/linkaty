@@ -1,21 +1,51 @@
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
 import React from "react";
 import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
-import { Appbar, useTheme } from "react-native-paper";
+import { Appbar, FAB, useTheme } from "react-native-paper";
 import { useBookmarks } from "../api/queries";
 import { BookmarksList } from "../components/BookmarksList";
 import { Loading } from "../components/Loading";
 import { BookmarksType } from "../types";
+import { AddBookmarkScreen } from "./AddBookmarkScreen";
 
 interface BookmarksScreenProps {
-  navigation?: DrawerNavigationHelpers;
+  navigation: DrawerNavigationHelpers;
   type?: BookmarksType;
 }
+
+const Stack = createNativeStackNavigator();
 
 export function BookmarksScreen({
   navigation,
   type = "all",
 }: BookmarksScreenProps): JSX.Element {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="bookmarks">
+        {props => (
+          <BookmarksBody {...props} drawerNavigation={navigation} type={type} />
+        )}
+      </Stack.Screen>
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen name="AddBookmarkModal" component={AddBookmarkScreen} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+}
+
+interface BookmarksBodyProps {
+  navigation: NativeStackNavigationHelpers;
+  drawerNavigation: DrawerNavigationHelpers;
+  type: BookmarksType;
+}
+
+function BookmarksBody({
+  navigation,
+  drawerNavigation,
+  type,
+}: BookmarksBodyProps) {
   const theme = useTheme();
   const { data: bookmarks, isFetched, isLoading } = useBookmarks(type);
 
@@ -26,7 +56,7 @@ export function BookmarksScreen({
     <>
       <StatusBar />
       <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
-        <Appbar.Action icon="menu" onPress={navigation?.toggleDrawer} />
+        <Appbar.Action icon="menu" onPress={drawerNavigation?.toggleDrawer} />
         <Appbar.Content title="Bookmarks" />
         <Appbar.Action icon="magnify" onPress={() => {}} />
       </Appbar.Header>
@@ -45,6 +75,11 @@ export function BookmarksScreen({
         {isLoading && <Loading />}
         {hasNoBookmarks && <Text>No bookmarks here!</Text>}
       </View>
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={() => navigation?.navigate("AddBookmarkModal")}
+      />
     </>
   );
 }
@@ -54,5 +89,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });
