@@ -2,9 +2,16 @@ import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Appbar, Chip, useTheme } from "react-native-paper";
-import { StatusBar, StyleSheet, View, Text } from "react-native";
+import {
+  StatusBar,
+  StyleSheet,
+  View,
+  Text,
+  RefreshControl,
+} from "react-native";
 import { useTags } from "../api/queries";
 import { Loading } from "../components/Loading";
+import { useRefresh } from "../hooks/useRefresh";
 
 interface TagsScreenProps {
   navigation?: DrawerNavigationHelpers;
@@ -12,7 +19,9 @@ interface TagsScreenProps {
 
 export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
   const theme = useTheme();
-  const { data: tags, isLoading, isFetched } = useTags();
+  const { data: tags, isLoading, isFetched, refetch } = useTags();
+
+  const { isRefreshing, onRefresh } = useRefresh({ callback: refetch });
 
   const hasTags = isFetched && tags && tags.length > 0;
   const hasNoTags = !hasTags && isFetched;
@@ -40,6 +49,9 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
               ...styles.tagsContainer,
               backgroundColor: theme.colors.background,
             }}
+            refreshControl={
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+            }
           >
             {tags?.map(tag => (
               <Chip key={tag.id}>#{tag.name}</Chip>

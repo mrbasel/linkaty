@@ -2,11 +2,19 @@ import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
 import React from "react";
-import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Appbar, FAB, useTheme } from "react-native-paper";
 import { useBookmarks } from "../api/queries";
 import { BookmarksList } from "../components/BookmarksList";
 import { Loading } from "../components/Loading";
+import { useRefresh } from "../hooks/useRefresh";
 import { BookmarksType } from "../types";
 import { AddBookmarkScreen } from "./AddBookmarkScreen";
 
@@ -47,7 +55,9 @@ function BookmarksBody({
   type,
 }: BookmarksBodyProps) {
   const theme = useTheme();
-  const { data: bookmarks, isFetched, isLoading } = useBookmarks(type);
+  const { data: bookmarks, isFetched, isLoading, refetch } = useBookmarks(type);
+
+  const { isRefreshing, onRefresh } = useRefresh({ callback: refetch });
 
   const hasBookmarks = isFetched && bookmarks && bookmarks.length > 0;
   const hasNoBookmarks = !hasBookmarks && isFetched;
@@ -67,7 +77,12 @@ function BookmarksBody({
         }}
       >
         {hasBookmarks && (
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            refreshControl={
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+            }
+          >
             <BookmarksList bookmarks={bookmarks ?? []} />
           </ScrollView>
         )}
