@@ -20,11 +20,22 @@ export async function createBookmark(payload: CreateBookmarkPayload) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(preparePayload(payload)),
   });
-  console.log(response.status);
-  console.log(await response.json());
   return response;
+}
+
+function preparePayload(payload: CreateBookmarkPayload) {
+  const { url, title, description, tag_names } = payload;
+
+  const preparedPayload: CreateBookmarkPayload = { url };
+  if (title && title.trim().length > 0) preparedPayload.title = title;
+  if (tag_names && tag_names?.filter(tag => tag.trim().length > 0).length > 0)
+    preparedPayload.tag_names = tag_names;
+  if (description && description.trim().length > 0)
+    preparedPayload.description = description;
+
+  return preparedPayload;
 }
 
 export function useCreateBookmark() {
