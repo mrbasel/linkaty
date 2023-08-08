@@ -1,4 +1,4 @@
-import { Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import React from "react";
 import { Bookmark } from "../types";
 import {
@@ -7,6 +7,7 @@ import {
   TouchableRipple,
   useTheme,
 } from "react-native-paper";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 interface BookmarkProps {
   bookmark: Bookmark;
@@ -18,6 +19,12 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
   const [visible, setVisible] = React.useState(false);
 
   const innerContainerPadding = bookmark.tag_names.length > 0 ? 10 : 0;
+
+  const onCopy = () => {
+    Clipboard.setString(bookmark.url);
+    setVisible(false);
+    ToastAndroid.show("URL copied to clipboard", ToastAndroid.SHORT);
+  };
 
   return (
     <View style={styles.container}>
@@ -43,7 +50,7 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
               />
             }
           >
-            <Menu.Item title="Copy" />
+            <Menu.Item title="Copy" onPress={onCopy} />
             <Menu.Item title="Edit" />
             <Menu.Item title="Delete" />
           </Menu>
