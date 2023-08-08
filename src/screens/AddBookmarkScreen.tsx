@@ -20,7 +20,11 @@ export function AddBookmarkScreen({ navigation }: AddBookmarkScreenProps) {
 
   const handleAdd = async () => {
     const tagsArray = tags.split(" ");
-    await createBookmark({ url, tag_names: tagsArray, title, description });
+    const payload: Parameters<typeof createBookmark>[0] = { url };
+    if (tags.trim().length > 0) payload.tag_names = tagsArray;
+    if (title.trim().length > 0) payload.title = title;
+    if (description.trim().length > 0) payload.description = description;
+    await createBookmark(payload);
     navigation?.goBack();
   };
 

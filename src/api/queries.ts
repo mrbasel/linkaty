@@ -34,7 +34,7 @@ async function fetchArchivedBookmarks(): Promise<Bookmark[]> {
 export function useBookmarks(type: BookmarksType) {
   let queryFn =
     type === "archived" ? fetchArchivedBookmarks : () => fetchBookmarks(type);
-  return useQuery({ queryKey: [type, "bookmarks"], queryFn: queryFn });
+  return useQuery({ queryKey: ["bookmarks", type], queryFn: queryFn });
 }
 
 async function fetchTags(): Promise<Tag[]> {
