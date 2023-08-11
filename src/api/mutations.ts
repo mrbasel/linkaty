@@ -38,6 +38,28 @@ function preparePayload(payload: CreateBookmarkPayload) {
   return preparedPayload;
 }
 
+async function deleteBookmark(id: number) {
+  const response = await fetch(`${API_URL}/api/bookmarks/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${TOKEN}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  console.log({response})
+  return response;
+}
+
+export function useDeleteBookmark() {
+  const queryClient = useQueryClient();
+  return useMutation(deleteBookmark, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["bookmarks"]);
+    },
+  });
+}
+
 export function useCreateBookmark() {
   const queryClient = useQueryClient();
   return useMutation(createBookmark, {

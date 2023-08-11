@@ -8,6 +8,7 @@ import {
   useTheme,
 } from "react-native-paper";
 import Clipboard from "@react-native-clipboard/clipboard";
+import { DeleteBookmarkDialog } from "./DeleteBookmarkDialog";
 
 interface BookmarkProps {
   bookmark: Bookmark;
@@ -15,15 +16,26 @@ interface BookmarkProps {
 
 export function BookmarkItem({ bookmark }: BookmarkProps) {
   const theme = useTheme();
-  const handlePress = () => Linking.openURL(bookmark.url);
   const [visible, setVisible] = React.useState(false);
+  const [deleteDialogVisible, setDeleteDialogVisible] = React.useState(false);
 
   const innerContainerPadding = bookmark.tag_names.length > 0 ? 10 : 0;
+
+  const handlePress = () => Linking.openURL(bookmark.url);
 
   const onCopy = () => {
     Clipboard.setString(bookmark.url);
     setVisible(false);
     ToastAndroid.show("URL copied to clipboard", ToastAndroid.SHORT);
+  };
+
+  const onDelete = () => {
+    setVisible(false);
+    setDeleteDialogVisible(true);
+  };
+
+  const onCloseDeleteDialog = () => {
+    setDeleteDialogVisible(false);
   };
 
   return (
@@ -51,11 +63,15 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
             }
           >
             <Menu.Item title="Copy" onPress={onCopy} />
-            <Menu.Item title="Edit" />
-            <Menu.Item title="Delete" />
+            <Menu.Item title="Delete" onPress={onDelete} />
           </Menu>
         </View>
       </TouchableRipple>
+      <DeleteBookmarkDialog
+        bookmarkId={bookmark.id}
+        visible={deleteDialogVisible}
+        onDismiss={onCloseDeleteDialog}
+      />
     </View>
   );
 }
