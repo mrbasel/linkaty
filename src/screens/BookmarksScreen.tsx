@@ -17,6 +17,7 @@ import { Loading } from "../components/Loading";
 import { useRefresh } from "../hooks/useRefresh";
 import { BookmarksType } from "../types";
 import { AddBookmarkScreen } from "./AddBookmarkScreen";
+import { SearchBookmarksScreen } from "./SearchBookmarksScreen";
 
 interface BookmarksScreenProps {
   navigation: DrawerNavigationHelpers;
@@ -36,6 +37,10 @@ export function BookmarksScreen({
           <BookmarksBody {...props} drawerNavigation={navigation} type={type} />
         )}
       </Stack.Screen>
+      <Stack.Screen
+        name="SearchBookmarksScreen"
+        component={SearchBookmarksScreen}
+      />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="AddBookmarkModal" component={AddBookmarkScreen} />
       </Stack.Group>
@@ -68,7 +73,10 @@ function BookmarksBody({
       <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
         <Appbar.Action icon="menu" onPress={drawerNavigation?.toggleDrawer} />
         <Appbar.Content title="Bookmarks" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
+        <Appbar.Action
+          icon="magnify"
+          onPress={() => navigation.navigate("SearchBookmarksScreen")}
+        />
       </Appbar.Header>
       <View
         style={{
