@@ -44,7 +44,7 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
         <View
           style={{ padding: innerContainerPadding, ...styles.innerContainer }}
         >
-          <View>
+          <View style={styles.textContainer}>
             <Text style={styles.link}>{displayBookmarkTitle(bookmark)}</Text>
             <Text style={{ color: theme.colors.secondary }}>
               {displayBookmarkTags(bookmark.tag_names)}
@@ -76,17 +76,10 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
   );
 }
 
-const MAX_LENGTH = 40;
-
 function displayBookmarkTitle(bookmark: Bookmark) {
-  let stringToDisplay = "";
-  if (bookmark.title) stringToDisplay = bookmark.title;
-  else if (bookmark?.website_title) stringToDisplay = bookmark.website_title;
-  else stringToDisplay = bookmark.url;
-
-  if (stringToDisplay.length > MAX_LENGTH)
-    return stringToDisplay.slice(0, MAX_LENGTH - 3) + "...";
-  return stringToDisplay;
+  if (bookmark.title) return bookmark.title;
+  else if (bookmark?.website_title) return bookmark.website_title;
+  else return bookmark.url;
 }
 
 function displayBookmarkTags(tags: string[]) {
@@ -103,7 +96,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 10,
+  },
+  textContainer: {
+    width: "90%",
   },
   link: {
     color: "#8f9aff",
