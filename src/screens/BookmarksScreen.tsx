@@ -1,6 +1,4 @@
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
 import React from "react";
 import {
   RefreshControl,
@@ -16,49 +14,16 @@ import { BookmarksList } from "../components/BookmarksList";
 import { Loading } from "../components/Loading";
 import { useRefresh } from "../hooks/useRefresh";
 import { BookmarksType } from "../types";
-import { AddBookmarkScreen } from "./AddBookmarkScreen";
-import { SearchBookmarksScreen } from "./SearchBookmarksScreen";
 
 interface BookmarksScreenProps {
   navigation: DrawerNavigationHelpers;
   type?: BookmarksType;
 }
 
-const Stack = createNativeStackNavigator();
-
 export function BookmarksScreen({
   navigation,
   type = "all",
 }: BookmarksScreenProps): JSX.Element {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="bookmarks">
-        {props => (
-          <BookmarksBody {...props} drawerNavigation={navigation} type={type} />
-        )}
-      </Stack.Screen>
-      <Stack.Screen
-        name="SearchBookmarksScreen"
-        component={SearchBookmarksScreen}
-      />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="AddBookmarkModal" component={AddBookmarkScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
-  );
-}
-
-interface BookmarksBodyProps {
-  navigation: NativeStackNavigationHelpers;
-  drawerNavigation: DrawerNavigationHelpers;
-  type: BookmarksType;
-}
-
-function BookmarksBody({
-  navigation,
-  drawerNavigation,
-  type,
-}: BookmarksBodyProps) {
   const theme = useTheme();
   const { data: bookmarks, isFetched, isLoading, refetch } = useBookmarks(type);
 
@@ -71,7 +36,7 @@ function BookmarksBody({
     <>
       <StatusBar />
       <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
-        <Appbar.Action icon="menu" onPress={drawerNavigation?.toggleDrawer} />
+        <Appbar.Action icon="menu" onPress={navigation?.toggleDrawer} />
         <Appbar.Content title="Bookmarks" />
         <Appbar.Action
           icon="magnify"
