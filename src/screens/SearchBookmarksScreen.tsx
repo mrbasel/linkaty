@@ -8,6 +8,7 @@ import {
   TextInput,
   ScrollView,
   RefreshControl,
+  FlatList,
 } from "react-native";
 import { useBookmarks } from "../api/queries";
 import { useRefresh } from "../hooks/useRefresh";
@@ -15,6 +16,7 @@ import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib
 import { BookmarksList } from "../components/BookmarksList";
 import { Loading } from "../components/Loading";
 import { useDebounce } from "../hooks/useDebounce";
+import { BookmarkItem } from "../components/Bookmark";
 
 interface SearchBookmarksScreenProps {
   navigation: NativeStackNavigationHelpers;
@@ -62,14 +64,16 @@ export function SearchBookmarksScreen({
         {isLoading && <Loading />}
         {noResults && <Text>No results.</Text>}
         {hasResults && (
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
+          <FlatList
+            data={bookmarks}
+            keyExtractor={bookmark => bookmark.id.toString()}
             refreshControl={
               <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
             }
-          >
-            <BookmarksList bookmarks={bookmarks ?? []} />
-          </ScrollView>
+            renderItem={({ item: bookmark }) => (
+              <BookmarkItem key={bookmark.id} bookmark={bookmark} />
+            )}
+          />
         )}
       </View>
     </>
