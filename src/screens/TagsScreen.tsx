@@ -32,7 +32,6 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
       <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
         <Appbar.Action icon="menu" onPress={navigation?.toggleDrawer} />
         <Appbar.Content title="Tags" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
       </Appbar.Header>
       <View
         style={{

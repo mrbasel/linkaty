@@ -21,3 +21,8 @@ export interface Tag {
 }
 
 export type BookmarksType = "all" | "unread" | "archived" | "untagged";
+
+export interface ApiConfig {
+  serverUrl: string;
+  apiToken: string;
+}

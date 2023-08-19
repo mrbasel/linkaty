@@ -1,5 +1,5 @@
-import { API_URL, TOKEN } from "@env";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getApiConfig } from "../utils";
 
 interface CreateBookmarkPayload {
   url: string;
@@ -13,10 +13,11 @@ interface CreateBookmarkPayload {
 }
 
 export async function createBookmark(payload: CreateBookmarkPayload) {
-  const response = await fetch(`${API_URL}/api/bookmarks/`, {
+  const apiConfig = await getApiConfig();
+  const response = await fetch(`${apiConfig.serverUrl}/api/bookmarks/`, {
     method: "POST",
     headers: {
-      Authorization: `Token ${TOKEN}`,
+      Authorization: `Token ${apiConfig.apiToken}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -39,10 +40,11 @@ function preparePayload(payload: CreateBookmarkPayload) {
 }
 
 async function deleteBookmark(id: number) {
-  const response = await fetch(`${API_URL}/api/bookmarks/${id}/`, {
+  const apiConfig = await getApiConfig();
+  const response = await fetch(`${apiConfig.serverUrl}/api/bookmarks/${id}/`, {
     method: "DELETE",
     headers: {
-      Authorization: `Token ${TOKEN}`,
+      Authorization: `Token ${apiConfig.apiToken}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
