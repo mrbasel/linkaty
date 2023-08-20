@@ -46,7 +46,7 @@ export function MainDrawer({
       </View>
       <View>
         <Drawer.Item label="Settings" />
-        <Drawer.Item label="About" />
+        <Drawer.Item label="About" onPress={() => handlePress("AboutScreen")} />
       </View>
     </View>
   );

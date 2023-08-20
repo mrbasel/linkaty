@@ -8,6 +8,7 @@ import { MainScreen } from "../screens/MainScreen";
 import { SearchBookmarksScreen } from "../screens/SearchBookmarksScreen";
 import { SplashScreen } from "./SplashScreen";
 import { AuthContext } from "../contexts";
+import { AboutScreen } from "../screens/AboutScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ export function RootNavigator() {
             name="SearchBookmarksScreen"
             component={SearchBookmarksScreen}
           />
+          <Stack.Screen name="AboutScreen" component={AboutScreen} />
           <Stack.Group screenOptions={{ presentation: "modal" }}>
             <Stack.Screen
               name="AddBookmarkModal"
