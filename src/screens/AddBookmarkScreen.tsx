@@ -3,6 +3,7 @@ import React from "react";
 import { Appbar, Button, TextInput, useTheme } from "react-native-paper";
 import { StatusBar, View, StyleSheet } from "react-native";
 import { useCreateBookmark } from "../api/mutations";
+import { Header } from "../components/Header";
 
 interface AddBookmarkScreenProps {
   navigation?: DrawerNavigationHelpers;
@@ -32,11 +33,10 @@ export function AddBookmarkScreen({ navigation }: AddBookmarkScreenProps) {
 
   return (
     <>
-      <StatusBar />
-      <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
+      <Header>
         <Appbar.BackAction onPress={navigation?.goBack} />
         <Appbar.Content title="Add bookmark" />
-      </Appbar.Header>
+      </Header>
       <View
         style={{
           backgroundColor: theme.colors.background,

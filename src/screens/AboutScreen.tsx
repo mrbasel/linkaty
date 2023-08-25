@@ -2,6 +2,7 @@ import React from "react";
 import { Appbar, List, TouchableRipple, useTheme } from "react-native-paper";
 import { Linking, StatusBar, StyleSheet, View } from "react-native";
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
+import { Header } from "../components/Header";
 
 interface ListItem {
   title: string;
@@ -33,11 +34,10 @@ export function AboutScreen({
 
   return (
     <>
-      <StatusBar />
-      <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
+      <Header>
         <Appbar.BackAction onPress={navigation?.goBack} />
         <Appbar.Content title="About" />
-      </Appbar.Header>
+      </Header>
       <View
         style={{
           backgroundColor: theme.colors.background,

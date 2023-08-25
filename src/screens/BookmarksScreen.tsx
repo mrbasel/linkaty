@@ -11,6 +11,7 @@ import {
 import { Appbar, FAB, useTheme } from "react-native-paper";
 import { useBookmarks } from "../api/queries";
 import { BookmarksList } from "../components/BookmarksList";
+import { Header } from "../components/Header";
 import { Loading } from "../components/Loading";
 import { useRefresh } from "../hooks/useRefresh";
 import { BookmarksType } from "../types";
@@ -34,15 +35,14 @@ export function BookmarksScreen({
 
   return (
     <>
-      <StatusBar />
-      <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
+      <Header>
         <Appbar.Action icon="menu" onPress={navigation?.toggleDrawer} />
         <Appbar.Content title="Bookmarks" />
         <Appbar.Action
           icon="magnify"
           onPress={() => navigation.navigate("SearchBookmarksScreen")}
         />
-      </Appbar.Header>
+      </Header>
       <View
         style={{
           backgroundColor: theme.colors.background,

@@ -12,6 +12,7 @@ import {
 import { useTags } from "../api/queries";
 import { Loading } from "../components/Loading";
 import { useRefresh } from "../hooks/useRefresh";
+import { Header } from "../components/Header";
 
 interface TagsScreenProps {
   navigation?: DrawerNavigationHelpers;
@@ -28,11 +29,10 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
 
   return (
     <>
-      <StatusBar />
-      <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
+      <Header>
         <Appbar.Action icon="menu" onPress={navigation?.toggleDrawer} />
         <Appbar.Content title="Tags" />
-      </Appbar.Header>
+      </Header>
       <View
         style={{
           ...styles.mainContainer,
