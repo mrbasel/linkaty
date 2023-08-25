@@ -1,14 +1,22 @@
 import React from "react";
-import { TouchableRipple, Text, Menu, IconButton } from "react-native-paper";
+import { TouchableRipple, Text } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { Tag } from "../types";
+import { useNavigation } from "@react-navigation/native";
 
 interface TagItemProps {
   tag: Tag;
 }
 
 export function TagItem({ tag }: TagItemProps) {
-  const handlePress = () => {};
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate("SearchBookmarksScreen", {
+      query: `#${tag.name}`,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <TouchableRipple onPress={handlePress}>
@@ -46,5 +54,4 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "bold",
   },
-  optionsButton: {},
 });

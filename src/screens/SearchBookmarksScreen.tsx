@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import { Appbar, Searchbar, useTheme } from "react-native-paper";
+import { Appbar, useTheme } from "react-native-paper";
 import {
   StatusBar,
   StyleSheet,
   Text,
   View,
   TextInput,
-  ScrollView,
   RefreshControl,
   FlatList,
 } from "react-native";
 import { useBookmarks } from "../api/queries";
 import { useRefresh } from "../hooks/useRefresh";
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
-import { BookmarksList } from "../components/BookmarksList";
 import { Loading } from "../components/Loading";
 import { useDebounce } from "../hooks/useDebounce";
 import { BookmarkItem } from "../components/Bookmark";
 
 interface SearchBookmarksScreenProps {
   navigation: NativeStackNavigationHelpers;
+  route: any;
 }
 
 export function SearchBookmarksScreen({
   navigation,
+  route,
 }: SearchBookmarksScreenProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(() => {
+    if (route.params?.query) {
+      return route.params.query;
+    }
+    return "";
+  });
   const debouncedSearchQuery = useDebounce(searchQuery, 250);
   const {
     data: bookmarks,
