@@ -1,7 +1,8 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
 import { Divider, Drawer, useTheme } from "react-native-paper";
+import { AuthContext } from "../contexts";
 
 const bookmarkDrawerItems = ["All", "Archived", "Unread", "Untagged"];
 
@@ -15,10 +16,16 @@ export function MainDrawer({
   currentScreenIndex,
 }: MainDrawerProps) {
   const theme = useTheme();
+  const { setConfig } = useContext(AuthContext);
 
   const handlePress = (name: string) => {
     navigation?.navigate(name);
   };
+
+  const handleLogout = () => {
+    setConfig({ apiToken: "", serverUrl: "" });
+  };
+
   return (
     <View
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
@@ -45,8 +52,8 @@ export function MainDrawer({
         </View>
       </View>
       <View>
-        <Drawer.Item label="Settings" />
         <Drawer.Item label="About" onPress={() => handlePress("AboutScreen")} />
+        <Drawer.Item label="Logout" onPress={handleLogout} />
       </View>
     </View>
   );
