@@ -1,7 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import React, { useContext } from "react";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
-import { Divider, Drawer, useTheme } from "react-native-paper";
+import {
+  Button,
+  Dialog,
+  Divider,
+  Drawer,
+  Portal,
+  Text,
+  useTheme,
+} from "react-native-paper";
 import { AuthContext } from "../contexts";
 
 const bookmarkDrawerItems = ["All", "Archived", "Unread", "Untagged"];
@@ -16,14 +24,9 @@ export function MainDrawer({
   currentScreenIndex,
 }: MainDrawerProps) {
   const theme = useTheme();
-  const { setConfig } = useContext(AuthContext);
 
   const handlePress = (name: string) => {
     navigation?.navigate(name);
-  };
-
-  const handleLogout = () => {
-    setConfig({ apiToken: "", serverUrl: "" });
   };
 
   return (
@@ -53,9 +56,39 @@ export function MainDrawer({
       </View>
       <View>
         <Drawer.Item label="About" onPress={() => handlePress("AboutScreen")} />
-        <Drawer.Item label="Logout" onPress={handleLogout} />
+        <LogoutDialogItem />
       </View>
     </View>
+  );
+}
+
+function LogoutDialogItem() {
+  const [visible, setVisible] = React.useState(false);
+  const { setConfig } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    setConfig({ apiToken: "", serverUrl: "" });
+  };
+
+  const toggleDialog = () => {
+    setVisible(!visible);
+  };
+
+  return (
+    <>
+      <Drawer.Item label="Logout" onPress={toggleDialog} />
+      <Portal>
+        <Dialog visible={visible} onDismiss={toggleDialog}>
+          <Dialog.Content>
+            <Text variant="bodyMedium">Are you sure you want to logout?</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={toggleDialog}>Close</Button>
+            <Button onPress={handleLogout}>Logout</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+    </>
   );
 }
 
