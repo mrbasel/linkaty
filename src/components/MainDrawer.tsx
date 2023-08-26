@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "react-native-paper";
 import { AuthContext } from "../contexts";
+import { useQueryClient } from "@tanstack/react-query";
 
 const bookmarkDrawerItems = ["All", "Archived", "Unread", "Untagged"];
 
@@ -65,9 +66,11 @@ export function MainDrawer({
 function LogoutDialogItem() {
   const [visible, setVisible] = React.useState(false);
   const { setConfig } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     setConfig({ apiToken: "", serverUrl: "" });
+    queryClient.clear();
   };
 
   const toggleDialog = () => {
