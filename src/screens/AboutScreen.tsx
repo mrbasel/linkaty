@@ -18,8 +18,11 @@ const listItems: ListItem[] = [
     description: "Basel Al Nassr",
     href: "https://baselalnassr.com",
   },
-  { title: "Source code", href: "https://github.com" },
-  { title: "Leave feedback", href: "https://github.com" },
+  { title: "Source code", href: "https://github.com/mrbasel/linkaty" },
+  {
+    title: "Leave feedback",
+    href: "https://github.com/mrbasel/linkaty/issues",
+  },
 ];
 
 export function AboutScreen({
