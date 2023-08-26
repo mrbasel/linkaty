@@ -34,7 +34,7 @@ export function AuthScreen() {
     >
       <View style={styles.innerContainer}>
         <Text variant="headlineMedium" style={styles.title}>
-          Linkdroid
+          Linkaty
         </Text>
         <View style={styles.formContainer}>
           <View>
