@@ -10,14 +10,9 @@ export function useAuth() {
 
   const setConfig = useCallback(async (config: ApiConfig) => {
     try {
-      const response = await Keychain.setGenericPassword(
-        "apiConfig",
-        JSON.stringify(config),
-        {
-          service: "linkding",
-        },
-      );
-      console.log(response);
+      await Keychain.setGenericPassword("apiConfig", JSON.stringify(config), {
+        service: "linkding",
+      });
       setApiConfig(config);
     } catch (e) {
       throw e;
@@ -30,7 +25,6 @@ export function useAuth() {
         const response = await Keychain.getGenericPassword({
           service: "linkding",
         });
-        console.log(response);
         if (!response) return;
 
         const config = JSON.parse(response.password ?? "{}");
