@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApiConfig } from "./types";
+import * as Keychain from "react-native-keychain";
 
 export function getIsValidUrl(urlString: string) {
   let url: URL | null = null;
@@ -14,21 +15,12 @@ export function getIsValidUrl(urlString: string) {
 
 export async function getApiConfig(): Promise<ApiConfig> {
   try {
-    const apiConfigString = await AsyncStorage.getItem("apiConfig");
-    const apiConfig = JSON.parse(apiConfigString ?? "{}");
+    const response = await Keychain.getGenericPassword({
+      service: "linkding",
+    });
+    if (!response) throw new Error("No entry found");
+    const apiConfig = JSON.parse(response.password ?? "{}");
     return apiConfig;
-  } catch (e) {
-    throw e;
-  }
-}
-
-export async function setApiConfig({ serverUrl, apiToken }: ApiConfig) {
-  console.log("setApiConfig");
-  try {
-    await AsyncStorage.setItem(
-      "apiConfig",
-      JSON.stringify({ serverUrl, apiToken }),
-    );
   } catch (e) {
     throw e;
   }

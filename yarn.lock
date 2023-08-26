@@ -5695,6 +5695,11 @@
     "lodash" "^4.17.21"
     "prop-types" "^15.7.2"
 
+"react-native-keychain@^8.1.2":
+  "integrity" "sha512-bhHEui+yMp3Us41NMoRGtnWEJiBE0g8tw5VFpq4mpmXAx6XJYahuM6K3WN5CsUeUl83hYysSL9oFZNKSTPSvYw=="
+  "resolved" "https://registry.npmjs.org/react-native-keychain/-/react-native-keychain-8.1.2.tgz"
+  "version" "8.1.2"
+
 "react-native-paper@^5.9.1":
   "integrity" "sha512-zsOdKQ+mXxeY+qZDSpizBTFVFrnV4P/84ZgSjTKQjbmPU5MnO1xJtntWVmk7Pba81x5Hbcf3Q1/9VP3LHy1anA=="
   "resolved" "https://registry.npmjs.org/react-native-paper/-/react-native-paper-5.9.1.tgz"
