@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Bookmark } from "../types";
-import { BookmarkItem } from "./Bookmark";
+import { BookmarkItem } from "./BookmarkItem";
 
 interface BookmarksListProps {
   bookmarks: Bookmark[];

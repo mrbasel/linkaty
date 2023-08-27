@@ -14,7 +14,7 @@ import { useRefresh } from "../hooks/useRefresh";
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
 import { Loading } from "../components/Loading";
 import { useDebounce } from "../hooks/useDebounce";
-import { BookmarkItem } from "../components/Bookmark";
+import { BookmarkItem } from "../components/BookmarkItem";
 
 interface SearchBookmarksScreenProps {
   navigation: NativeStackNavigationHelpers;
