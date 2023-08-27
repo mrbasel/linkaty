@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableRipple, Text } from "react-native-paper";
+import { TouchableRipple, Text, useTheme } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { Tag } from "../types";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +9,7 @@ interface TagItemProps {
 }
 
 export function TagItem({ tag }: TagItemProps) {
+  const theme = useTheme();
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -22,7 +23,10 @@ export function TagItem({ tag }: TagItemProps) {
       <TouchableRipple onPress={handlePress}>
         <View style={styles.innerContainer}>
           <View style={styles.textContainer}>
-            <Text variant="bodyLarge" style={styles.tag}>
+            <Text
+              variant="bodyLarge"
+              style={{ ...styles.tag, color: theme.colors.primary }}
+            >
               #{tag.name}
             </Text>
           </View>
@@ -50,7 +54,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   tag: {
-    color: "#8f9aff",
     textAlign: "left",
     fontWeight: "bold",
   },

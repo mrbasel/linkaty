@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Appbar, useTheme } from "react-native-paper";
 import {
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -15,6 +14,7 @@ import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib
 import { Loading } from "../components/Loading";
 import { useDebounce } from "../hooks/useDebounce";
 import { BookmarkItem } from "../components/BookmarkItem";
+import { Header } from "../components/Header";
 
 interface SearchBookmarksScreenProps {
   navigation: NativeStackNavigationHelpers;
@@ -46,20 +46,16 @@ export function SearchBookmarksScreen({
 
   return (
     <>
-      <StatusBar />
-      <Appbar.Header style={{ backgroundColor: theme.colors.primaryContainer }}>
+      <Header>
         <Appbar.BackAction onPress={navigation?.goBack} />
         <TextInput
           placeholder="Search"
           autoFocus={true}
           value={searchQuery}
           onChangeText={query => setSearchQuery(query)}
-          style={{
-            backgroundColor: theme.colors.primaryContainer,
-            ...styles.searchBar,
-          }}
+          style={styles.searchBar}
         />
-      </Appbar.Header>
+      </Header>
       <View
         style={{
           backgroundColor: theme.colors.background,

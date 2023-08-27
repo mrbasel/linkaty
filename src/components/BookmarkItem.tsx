@@ -45,7 +45,9 @@ export function BookmarkItem({ bookmark }: BookmarkProps) {
           style={{ padding: innerContainerPadding, ...styles.innerContainer }}
         >
           <View style={styles.textContainer}>
-            <Text style={styles.link}>{displayBookmarkTitle(bookmark)}</Text>
+            <Text style={{ ...styles.link, color: theme.colors.primary }}>
+              {displayBookmarkTitle(bookmark)}
+            </Text>
             <Text style={{ color: theme.colors.secondary }}>
               {displayBookmarkTags(bookmark.tag_names)}
             </Text>
@@ -103,7 +105,6 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   link: {
-    color: "#8f9aff",
     textAlign: "left",
     fontWeight: "bold",
   },
