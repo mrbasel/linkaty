@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.linkding_mobile"
+    namespace "com.linkaty"
     defaultConfig {
-        applicationId "com.linkding_mobile"
+        applicationId "com.linkaty"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

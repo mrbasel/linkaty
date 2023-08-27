@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface linkding_mobileTests : XCTestCase
+@interface linkatyTests : XCTestCase
 
 @end
 
-@implementation linkding_mobileTests
+@implementation linkatyTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {
