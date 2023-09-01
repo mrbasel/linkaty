@@ -12,6 +12,8 @@ import {
 } from "react-native-paper";
 import { AuthContext } from "../contexts";
 import { useQueryClient } from "@tanstack/react-query";
+import { useBookmarks, useTags } from "../api/queries";
+import { getMostUsedTags } from "../utils";
 
 const bookmarkDrawerItems = ["All", "Archived", "Unread", "Untagged"];
 
@@ -26,8 +28,16 @@ export function MainDrawer({
 }: MainDrawerProps) {
   const theme = useTheme();
 
+  const { data: bookmarks } = useBookmarks("all");
+
   const handlePress = (name: string) => {
     navigation?.navigate(name);
+  };
+
+  const handleTagPress = (name: string) => {
+    navigation?.navigate("SearchBookmarksScreen", {
+      query: `#${name}`,
+    });
   };
 
   return (
@@ -35,7 +45,7 @@ export function MainDrawer({
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
     >
       <View>
-        <Drawer.Section title="Bookmarks" showDivider={false}>
+        <Drawer.Section title="Bookmarks">
           {bookmarkDrawerItems.map((item, index) => (
             <Drawer.Item
               label={item}
@@ -45,15 +55,19 @@ export function MainDrawer({
             />
           ))}
         </Drawer.Section>
-        <View>
-          <Divider />
+        <Drawer.Section title="Tags">
           <Drawer.Item
-            label="Tags"
+            label="All"
             onPress={() => handlePress("Tags")}
             active={currentScreenIndex === 4}
           />
-          <Divider />
-        </View>
+          {getMostUsedTags(bookmarks ?? [])?.map(tag => (
+            <Drawer.Item
+              label={`#${tag}`}
+              onPress={() => handleTagPress(tag)}
+            />
+          ))}
+        </Drawer.Section>
       </View>
       <View>
         <Drawer.Item label="About" onPress={() => handlePress("AboutScreen")} />
