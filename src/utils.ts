@@ -34,6 +34,5 @@ export function getMostUsedTags(bookmarks: Bookmark[], limit = 3) {
     tagsDict[tag] += 1;
   }
   const sortedTagsByUse = Object.entries(tagsDict).sort((a, b) => b[1] - a[1]);
-  console.log(sortedTagsByUse);
   return sortedTagsByUse.slice(0, limit).map(tag => tag[0]);
 }

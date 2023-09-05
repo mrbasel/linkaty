@@ -14,6 +14,7 @@ import { AuthContext } from "../contexts";
 import { useQueryClient } from "@tanstack/react-query";
 import { useBookmarks, useTags } from "../api/queries";
 import { getMostUsedTags } from "../utils";
+import { ThemeProp } from "react-native-paper/lib/typescript/src/types";
 
 const bookmarkDrawerItems = ["All", "Archived", "Unread", "Untagged"];
 
@@ -40,12 +41,16 @@ export function MainDrawer({
     });
   };
 
+  const titleTheme: ThemeProp = {
+    colors: { onSurfaceVariant: theme.colors.primary },
+  };
+
   return (
     <View
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
     >
       <View>
-        <Drawer.Section title="Bookmarks">
+        <Drawer.Section title="Bookmarks" theme={titleTheme}>
           {bookmarkDrawerItems.map((item, index) => (
             <Drawer.Item
               label={item}
@@ -55,7 +60,7 @@ export function MainDrawer({
             />
           ))}
         </Drawer.Section>
-        <Drawer.Section title="Tags">
+        <Drawer.Section title="Tags" theme={titleTheme}>
           <Drawer.Item
             label="All"
             onPress={() => handlePress("Tags")}
