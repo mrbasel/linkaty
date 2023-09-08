@@ -18,7 +18,11 @@ import { Header } from "../components/Header";
 
 interface SearchBookmarksScreenProps {
   navigation: NativeStackNavigationHelpers;
-  route: any;
+  route: {
+    params?: {
+      query: string;
+    }
+  };
 }
 
 export function SearchBookmarksScreen({
@@ -43,6 +47,7 @@ export function SearchBookmarksScreen({
 
   const hasResults = isFetched && bookmarks && bookmarks?.length > 0;
   const noResults = !isLoading && !hasResults;
+  const autoFocus = !route.params?.query;
 
   return (
     <>
@@ -50,7 +55,7 @@ export function SearchBookmarksScreen({
         <Appbar.BackAction onPress={navigation?.goBack} />
         <TextInput
           placeholder="Search"
-          autoFocus={true}
+          autoFocus={autoFocus}
           value={searchQuery}
           onChangeText={query => setSearchQuery(query)}
           style={styles.searchBar}
