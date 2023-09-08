@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "./hooks/useAuth";
+import { Resource } from "./types";
 
 export const AuthContext = React.createContext<ReturnType<typeof useAuth>>({
   apiConfig: null,
@@ -7,3 +8,5 @@ export const AuthContext = React.createContext<ReturnType<typeof useAuth>>({
   isLoggedIn: false,
   setConfig: () => Promise.resolve(),
 });
+
+export const ResourceContext = React.createContext<Resource | null>(null);

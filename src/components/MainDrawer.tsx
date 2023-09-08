@@ -4,7 +4,6 @@ import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript
 import {
   Button,
   Dialog,
-  Divider,
   Drawer,
   Portal,
   Text,
@@ -12,7 +11,7 @@ import {
 } from "react-native-paper";
 import { AuthContext } from "../contexts";
 import { useQueryClient } from "@tanstack/react-query";
-import { useBookmarks, useTags } from "../api/queries";
+import { useBookmarks } from "../api/queries";
 import { getMostUsedTags } from "../utils";
 import { ThemeProp } from "react-native-paper/lib/typescript/src/types";
 

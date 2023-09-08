@@ -26,3 +26,23 @@ export interface ApiConfig {
   serverUrl: string;
   apiToken: string;
 }
+
+export interface CreateBookmarkPayload {
+  url: string;
+  title?: string;
+  description?: string;
+  notes?: string;
+  is_archived?: boolean;
+  unread?: boolean;
+  shared?: boolean;
+  tag_names?: string[];
+}
+
+export interface Resource {
+  getBookmarks: (type: BookmarksType, query?: string) => Promise<Bookmark[]>;
+  getArchivedBookmarks: () => Promise<Bookmark[]>;
+  createBookmark: (payload: CreateBookmarkPayload) => Promise<void>;
+  // updateBookmark: (bookmark: Bookmark) => Promise<Bookmark>;
+  deleteBookmark: (bookmark: Bookmark) => Promise<void>;
+  getTags: () => Promise<Tag[]>;
+}

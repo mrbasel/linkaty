@@ -1,6 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApiConfig, Bookmark, Tag } from "./types";
 import * as Keychain from "react-native-keychain";
+
+export function responseHandler(response: Response) {
+  if (!response.ok) {
+    throw new Error("Something went wrong.");
+  }
+  return response.json();
+}
 
 export function getIsValidUrl(urlString: string) {
   let url: URL | null = null;

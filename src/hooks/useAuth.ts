@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { ApiConfig } from "../types";
 import * as Keychain from "react-native-keychain";
+import { AuthContext } from "../contexts";
 
 export function useAuth() {
   const [apiConfig, setApiConfig] = useState<ApiConfig | null>(null);
@@ -39,4 +40,8 @@ export function useAuth() {
   }, []);
 
   return { apiConfig, isLoggedIn, isFetched, setConfig };
+}
+
+export function useAuthContext() {
+  return useContext(AuthContext);
 }
