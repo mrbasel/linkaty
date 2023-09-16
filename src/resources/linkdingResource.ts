@@ -39,7 +39,16 @@ export class LinkdingResource implements Resource {
     return preparedPayload;
   }
 
-  async getBookmarks(type: BookmarksType, query?: string) {
+  getArchivedBookmarks = async () => {
+    const data = await fetch(`${this.serverUrl}/api/bookmarks/archived`, {
+      headers: {
+        Authorization: `Token ${this.apiToken}`,
+      },
+    }).then(responseHandler);
+    return data?.results ?? [];
+  };
+
+  getBookmarks = async (type: BookmarksType, query?: string) => {
     const url = LinkdingResource.constructQuery(this.serverUrl, type, query);
 
     const data = await fetch(url, {
@@ -48,18 +57,9 @@ export class LinkdingResource implements Resource {
       },
     }).then(responseHandler);
     return data?.results ?? [];
-  }
+  };
 
-  async getArchivedBookmarks() {
-    const data = await fetch(`${this.serverUrl}/api/bookmarks/archived`, {
-      headers: {
-        Authorization: `Token ${this.apiToken}`,
-      },
-    }).then(responseHandler);
-    return data?.results ?? [];
-  }
-
-  async createBookmark(payload: CreateBookmarkPayload) {
+  createBookmark = (payload: CreateBookmarkPayload) => {
     const data = fetch(`${this.serverUrl}/api/bookmarks/`, {
       method: "POST",
       headers: {
@@ -70,9 +70,9 @@ export class LinkdingResource implements Resource {
       body: JSON.stringify(LinkdingResource.prepareBookmarkPayload(payload)),
     }).then(responseHandler);
     return data;
-  }
+  };
 
-  async deleteBookmark(bookmark: Bookmark) {
+  deleteBookmark = async (bookmark: Bookmark) => {
     const id = bookmark.id;
     const data = await fetch(`${this.serverUrl}/api/bookmarks/${id}/`, {
       method: "DELETE",
@@ -83,13 +83,13 @@ export class LinkdingResource implements Resource {
       },
     }).then(responseHandler);
     return data;
-  }
-  async getTags() {
-    const data = await fetch(`${this.serverUrl}/api/tags`, {
+  };
+  getTags = async () => {
+    const data = await fetch(`${this.serverUrl}/api/tags/`, {
       headers: {
         Authorization: `Token ${this.apiToken}`,
       },
     }).then(responseHandler);
     return data?.results ?? [];
-  }
+  };
 }
