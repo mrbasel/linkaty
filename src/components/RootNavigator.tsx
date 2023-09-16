@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useAuth } from "../hooks/useAuth";
 import { AddBookmarkScreen } from "../screens/AddBookmarkScreen";
 import { AuthScreen } from "../screens/AuthScreen";
 import { MainScreen } from "../screens/MainScreen";
@@ -9,11 +8,13 @@ import { SearchBookmarksScreen } from "../screens/SearchBookmarksScreen";
 import { SplashScreen } from "./SplashScreen";
 import { AuthContext } from "../contexts";
 import { AboutScreen } from "../screens/AboutScreen";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 const Stack = createNativeStackNavigator();
 
 export function RootNavigator() {
-  const { isLoggedIn, isFetched } = useContext(AuthContext);
+  const { isFetched } = useContext(AuthContext);
+  const isLoggedIn = useIsLoggedIn();
 
   if (!isFetched) return <SplashScreen />;
 
