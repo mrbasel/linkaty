@@ -48,8 +48,9 @@ export function BookmarksScreen({
           ...styles.mainContainer,
         }}
       >
-        {hasBookmarks && (
+        {!isLoading && (
           <ScrollView
+            style={styles.bookmarksList}
             contentInsetAdjustmentBehavior="automatic"
             refreshControl={
               <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
@@ -58,9 +59,12 @@ export function BookmarksScreen({
             <BookmarksList bookmarks={bookmarks ?? []} />
           </ScrollView>
         )}
-
         {isLoading && <Loading />}
-        {hasNoBookmarks && <Text>No bookmarks here!</Text>}
+        {hasNoBookmarks && (
+          <View style={styles.noBookmarksContainer}>
+            <Text>No bookmarks here!</Text>
+          </View>
+        )}
       </View>
       <FAB
         icon="plus"
@@ -76,6 +80,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  bookmarksList: { width: "100%" },
+  noBookmarksContainer: {
+    position: "absolute",
   },
   fab: {
     position: "absolute",

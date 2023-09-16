@@ -40,13 +40,9 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
         }}
       >
         {isLoading && <Loading />}
-        {hasNoTags && (
-          <View style={styles.statusContainer}>
-            <Text>You don't have any tags yet.</Text>
-          </View>
-        )}
-        {hasTags && (
+        {!isLoading && (
           <ScrollView
+            style={styles.tagsList}
             contentInsetAdjustmentBehavior="automatic"
             refreshControl={
               <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
@@ -59,6 +55,12 @@ export function TagsScreen({ navigation }: TagsScreenProps): JSX.Element {
             </View>
           </ScrollView>
         )}
+
+        {hasNoTags && (
+          <View style={styles.statusContainer}>
+            <Text>You don't have any tags yet.</Text>
+          </View>
+        )}
       </View>
     </>
   );
@@ -68,11 +70,13 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     paddingBottom: 10,
   },
+  tagsList: {
+    width: "100%",
+  },
   statusContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    position: "absolute",
   },
 });
